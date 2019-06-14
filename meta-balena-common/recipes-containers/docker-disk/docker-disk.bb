@@ -62,7 +62,6 @@ do_compile () {
 	$DOCKER rmi ${_image_name} > /dev/null 2>&1 || true
 	$DOCKER build -t ${_image_name} -f ${WORKDIR}/Dockerfile ${WORKDIR}
 	$DOCKER run --privileged --rm \
-		-e BALENA_STORAGE=${BALENA_STORAGE} \
 		-e USER_ID=$(id -u) -e USER_GID=$(id -u) \
 		-e TARGET_REPOSITORY="${TARGET_REPOSITORY}" \
 		-e TARGET_TAG="${TARGET_TAG}" \

@@ -67,14 +67,6 @@ INITRAMFS_TASK = ""
 # resinOS defaults to ipk packages
 PACKAGE_CLASSES ?= "package_ipk"
 
-# Default the docker storage driver to aufs
-BALENA_STORAGE ?= "aufs"
-python () {
-    docker_storage = d.getVar('DOCKER_STORAGE', True)
-    if docker_storage:
-        d.setVar('BALENA_STORAGE', docker_storage)
-}
-
 # Partition fingerprints files
 RESIN_FINGERPRINT_EXT ?= "fingerprint"
 RESIN_FINGERPRINT_FILENAME ?= "resinos"
