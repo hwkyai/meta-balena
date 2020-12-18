@@ -1,6 +1,11 @@
 Change log
 -----------
 
+# v2.66.0
+## (2020-12-18)
+
+* Add support for rootfs on MD RAID1 [Michal Toman]
+
 # v2.65.1
 ## (2020-12-17)
 

@@ -1,4 +1,20 @@
 - commits:
+    - subject: Add support for rootfs on MD RAID1
+      hash: 89119ca505eae213b5d12caf637a6a2b807ff5b9
+      body: |
+        This commit does two things:
+        - Build in necessary kernel modules
+        - Add the mdadm userspace utility to rootfs and initrd
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Michal Toman <michalt@balena.io>
+        signed-off-by: Michal Toman <michalt@balena.io>
+      author: Michal Toman
+      nested: []
+  version: 2.66.0
+  date: 2020-12-18T12:43:53.478Z
+- commits:
     - subject: 'u-boot: Add required configuration for BalenaOS environment'
       hash: 401345c86a3a017dc548a94c7afa3977d547fc21
       body: >
