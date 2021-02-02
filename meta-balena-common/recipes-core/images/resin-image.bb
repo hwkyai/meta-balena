@@ -10,8 +10,8 @@ RESIN_FLAG_FILE = "${RESIN_IMAGE_FLAG_FILE}"
 # The default root filesystem partition size is set in such a way that the
 # entire space taken by resinOS would not exceed 700 MiB. This  can be
 # overwritten by board specific layers.
-#
-IMAGE_ROOTFS_SIZE = "319488"
+
+IMAGE_ROOTFS_SIZE = "${@balena_rootfs_size(d)}"
 IMAGE_OVERHEAD_FACTOR = "1.0"
 IMAGE_ROOTFS_EXTRA_SPACE = "0"
 IMAGE_ROOTFS_MAXSIZE = "${IMAGE_ROOTFS_SIZE}"
