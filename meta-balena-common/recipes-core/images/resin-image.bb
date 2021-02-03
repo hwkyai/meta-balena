@@ -78,3 +78,5 @@ RESIN_BOOT_PARTITION_FILES_append = "${@ ' extra_uEnv.txt:/extra_uEnv.txt ' if d
 
 # Resin image flag file
 RESIN_BOOT_PARTITION_FILES_append = " ${RESIN_IMAGE_FLAG_FILE}:/${RESIN_IMAGE_FLAG_FILE}"
+
+addtask image_size_check after do_image_resinos_img before do_image_complete
