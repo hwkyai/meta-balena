@@ -24,8 +24,8 @@ mkdir -p $DATA_VOLUME/docker
 mkdir -p $DATA_VOLUME/resin-data
 
 # Start docker
-echo "Starting docker daemon with overlay2 storage driver."
-dockerd -H "$DOCKER_HOST" --data-root="$DATA_VOLUME/docker" -s overlay2 -b none --experimental &
+echo "Starting docker daemon with $BALENA_STORAGE storage driver."
+dockerd -H "$DOCKER_HOST" --data-root="$DATA_VOLUME/docker" -s "$BALENA_STORAGE" -b none --experimental &
 echo "Waiting for docker to become ready.."
 STARTTIME="$(date +%s)"
 ENDTIME="$STARTTIME"
