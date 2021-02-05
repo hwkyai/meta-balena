@@ -54,7 +54,6 @@ INSANE_SKIP_${PN} += "already-stripped"
 FILES_${PN} += " \
 	/lib/systemd/system/* \
 	/home/root \
-	/boot/storage-driver \
 	${localstatedir} \
 	"
 
@@ -119,8 +118,6 @@ do_compile() {
 do_install() {
 	mkdir -p ${D}/${bindir}
 	install -m 0755 ${S}/src/import/bundles/dynbinary-balena/balena-engine ${D}/${bindir}/balena-engine
-	install -d ${D}/boot
-	echo ${BALENA_STORAGE} > ${D}/boot/storage-driver
 
 	ln -sf balena-engine ${D}/${bindir}/balena
 	ln -sf balena-engine ${D}/${bindir}/balenad
@@ -142,10 +139,8 @@ do_install() {
 
 	install -m 0644 ${WORKDIR}/balena.service ${D}/${systemd_unitdir}/system
 	install -m 0644 ${WORKDIR}/balena-healthcheck-image-load.service ${D}/${systemd_unitdir}/system
-	sed -i "s/@BALENA_STORAGE@/${BALENA_STORAGE}/g" ${D}${systemd_unitdir}/system/balena.service
 
 	install -m 0644 ${WORKDIR}/balena-host.service ${D}/${systemd_unitdir}/system
-	sed -i "s/@BALENA_STORAGE@/${BALENA_STORAGE}/g" ${D}${systemd_unitdir}/system/balena-host.service
 	install -m 0644 ${WORKDIR}/balena-host.socket ${D}/${systemd_unitdir}/system
 
 	install -m 0644 ${WORKDIR}/var-lib-docker.mount ${D}/${systemd_unitdir}/system
@@ -157,7 +152,6 @@ do_install() {
 	if ${@bb.utils.contains('DISTRO_FEATURES','development-image','true','false',d)}; then
 		install -d ${D}${sysconfdir}/systemd/system/balena.service.d
 		install -c -m 0644 ${WORKDIR}/balena.conf.systemd ${D}${sysconfdir}/systemd/system/balena.service.d/balena.conf
-		sed -i "s/@BALENA_STORAGE@/${BALENA_STORAGE}/g" ${D}${sysconfdir}/systemd/system/balena.service.d/balena.conf
 	fi
 
 	install -d ${D}/home/root/.docker

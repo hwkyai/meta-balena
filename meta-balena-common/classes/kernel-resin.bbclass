@@ -163,6 +163,7 @@ RESIN_CONFIGS[balena] ?= " \
     CONFIG_KEYS=y \
     CONFIG_MEMCG=y \
     CONFIG_MEMCG_SWAP=y \
+    CONFIG_OVERLAY_FS=y \
     "
 
 RESIN_CONFIGS[aufs] = " \
@@ -170,9 +171,9 @@ RESIN_CONFIGS[aufs] = " \
     CONFIG_AUFS_XATTR=y \
     "
 
-RESIN_CONFIGS[overlay2] = " \
-    CONFIG_OVERLAY_FS=y \
-    "
+# empty since included by default now
+# TODO remove
+RESIN_CONFIGS[overlay2] = ""
 
 RESIN_CONFIGS[apple_hfs] = " \
     CONFIG_HFS_FS=m \
@@ -627,12 +628,9 @@ python do_kernel_resin_aufs_fetch_and_unpack() {
     balena_storage = d.getVar('BALENA_STORAGE', True)
     bb.note("Kernel will be configured for " + balena_storage + " balena storage driver.")
 
-    # If overlay2, we assume support in the kernel source so no need for extra
-    # patches
-    if balena_storage == "overlay2":
-        if int(kernelversion_major) < 4:
-            bb.fatal("overlay2 is only available from kernel version 4.0. Can't use overlay2 as BALENA_STORAGE.")
-        return
+    # we need support for aufs AND overlayfs
+    if int(kernelversion_major) < 4:
+        bb.fatal("overlay2 is only available from kernel version 4.0. Can't use overlay2 as BALENA_STORAGE.")
 
     # Everything from here is for aufs
     if os.path.isdir(kernelsource + "/fs/aufs"):

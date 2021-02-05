@@ -19,6 +19,8 @@ def resinos_build_configuration():
     if d.getVar('BALENA_STORAGE', True) not in ['aufs', 'overlay2']:
         bb.error("ResinOS supports only aufs and overlay2 as balena storage drivers.")
         success = False
+    if d.getVar('BALENA_STORAGE', True) != "overlay2":
+        bb.warn("BalenaOS has deprecated support for aufs. The generated image will only be able to update to OS versions supporting the overlay2 storage driver.")
     if d.getVar('RESIN_CONNECTABLE', True) or d.getVar('RESIN_CONNECTABLE_SERVICES', True) or d.getVar('RESIN_CONNECTABLE_ENABLE_SERVICES', True):
         bb.warn("Your build configuration uses RESIN_CONNECTABLE* variables. These variables are no longer used. There is only one type of resinOS image type which is unconnected by default. The os-config tool is used to configure the resinOS image for connectivity to a resin instance.")
     if d.getVar('BALENA_DEPRECATED_YOCTO_LAYER', True) == "1":
