@@ -1,6 +1,14 @@
 Change log
 -----------
 
+# v2.70.1
+## (2021-02-11)
+
+* Check that the hostapp image fits the inactive partion on HUP [Alex Gonzalez]
+* image-resin: Add check for docker image size [Alex Gonzalez]
+* resin-image: Break down the rootfs image size calculation [Alex Gonzalez]
+* image_types_resin: Add rootfs size calculation function [Alex Gonzalez]
+
 # v2.70.0
 ## (2021-02-11)
 

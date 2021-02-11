@@ -1,4 +1,81 @@
 - commits:
+    - subject: Check that the hostapp image fits the inactive partion on HUP
+      hash: 878ed14ad41b3b8e492adb464468ec7379163b3b
+      body: >
+        Currently it is possible to build a docker image that wil then fail to
+
+        hup due to a lack of space on the inactive partition.
+
+
+        Add a task to check the docker image space against the available space
+        on
+
+        the root filesystem partition and fail the build if it's too big.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Changelog-entry: Check that the hostapp image fits the inactive partion on HUP
+        changelog-entry: Check that the hostapp image fits the inactive partion on HUP
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: 'image-resin: Add check for docker image size'
+      hash: 72e7e988c3c3e3cb5397e6b5366447f3f9bb1270
+      body: >
+        Currently it is possible to build a docker image that wil then fail to
+
+        hup due to a lack of space on the inactive partition.
+
+
+        Add a task to check the docker image space against the available space
+        on
+
+        the root filesystem partition and fail the build if it's too big.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: 'resin-image: Break down the rootfs image size calculation'
+      hash: 077f85aeadefdafa804cf7e20748b89859aee23a
+      body: |
+        Replace the IMAGE_ROOTFS_SIZE magic number with a calculation based on
+        the partition sizes on the balena image classes.
+
+        The rootfs size is calculated with the assumption of a total BalenaOS
+        size of 700M. This includes boot, state, rootA and rootB partitions. The
+        data partition will then grow to occupy the rest of the storage media.
+
+        Device integration layers can override this value if needed.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: 'image_types_resin: Add rootfs size calculation function'
+      hash: 4fc663a8322ccb3bf23b9297a79cade9be7e2baf
+      body: >
+        Instead of hardcoding the requested root filesystem value, let's explain
+
+        how the calculation is made with a python function that will adjust
+        based
+
+        on the sizes of other partitions.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+  version: 2.70.1
+  date: 2021-02-11T17:17:30.413Z
+- commits:
     - subject: 'systemd/timeinit: use systemd mount unit for /etc/fake-hwclock'
       hash: 7d6ec3d411af78b9b1f979b90461e9efb059e4e7
       body: |
