@@ -16,9 +16,6 @@ IMAGE_OVERHEAD_FACTOR = "1.0"
 IMAGE_ROOTFS_EXTRA_SPACE = "0"
 IMAGE_ROOTFS_MAXSIZE = "${IMAGE_ROOTFS_SIZE}"
 
-# Generated resinhup-tar based on RESINHUP variable
-IMAGE_FSTYPES = "${@bb.utils.contains('RESINHUP', 'yes', 'tar', '', d)}"
-
 inherit core-image image-resin features_check
 
 SPLASH += "plymouth-balena-theme"
