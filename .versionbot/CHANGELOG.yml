@@ -1,4 +1,43 @@
 - commits:
+    - subject: 'image_types_resin: make rootfs labeling generic'
+      hash: 9faf0629ac006350e2e95be7088842535b371829
+      body: ''
+      footer:
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+        Change-type: patch
+        change-type: patch
+      author: Joseph Kogut
+      nested: []
+    - subject: 'image_types_resin: make agnostic to root fstype'
+      hash: 364b56865c8aea7d33197b385e38760b5eb5fbeb
+      body: |
+        Build RESIN_HOSTAPP_IMG path using RESIN_ROOT_FSTYPE instead of assuming
+        the root is ext4.
+      footer:
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+        Change-type: patch
+        change-type: patch
+      author: Joseph Kogut
+      nested: []
+    - subject: 'mkfs-hostapp-native: make agnostic to fstype'
+      hash: 92fa73a2e280916d95051c9832cd84b1419bac4e
+      body: |
+        Remove assumptions about root fstype. Rename create to create.ext4,
+        mkfs.hostapp-ext4 to mkfs.hostapp, and add an argument to mkfs.hostapp
+        for fstype. Remove CMD from Dockerfile in favor of passing it as an
+        argument to docker run.
+      footer:
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+        Change-type: minor
+        change-type: minor
+      author: Joseph Kogut
+      nested: []
+  version: 2.72.0
+  date: 2021-02-22T20:46:40.984Z
+- commits:
     - subject: 'meta-balena-common: add grub-efi support'
       hash: 3bfbd05d81d59c82fb131117700325416fb152cb
       body: |
