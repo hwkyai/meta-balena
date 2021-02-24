@@ -1,6 +1,11 @@
 Change log
 -----------
 
+# v2.72.0
+## (2021-02-24)
+
+* meta-balena: rename resin image types to balena [Kyle Harding]
+
 # v2.71.2
 ## (2021-02-23)
 
