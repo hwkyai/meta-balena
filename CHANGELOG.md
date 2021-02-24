@@ -1,26 +1,17 @@
 Change log
 -----------
 
-# v2.71.1
-## (2021-02-23)
-
-* recipes-bsp: grub: install only release modules [Joseph Kogut]
-
 # v2.71.0
-## (2021-02-15)
+## (2021-02-24)
 
-* meta-balena-common: add grub-efi support [Joseph Kogut]
-
-# v2.70.2
-## (2021-02-12)
-
-* Update PR template to specify test coverage in more detail [Alex Gonzalez]
-* Update codeowners [Alex Gonzalez]
-
-# v2.70.1
-## (2021-02-11)
-
-* Add leviathan automated OS test suite [Vipul Gupta (@vipulgupta2048)]
+* docs: host extensions: Document the syntax for container preloading [Alex Gonzalez]
+* hostapp-extensions-update: Adapt to supervisor managed extensions [Alex Gonzalez]
+* The supervisor now updates from Balena's registry [Alex Gonzalez]
+* resin-device-register: Use supervisor version label instead of tag [Alex Gonzalez]
+* docker-disk: Allow to define a custom CA when preloading extra containers [Alex Gonzalez]
+* Preload extra containers from Balena's registry [Alex Gonzalez]
+* Revert "docker-disk: Add the host extension images to the data partition" [Alex Gonzalez]
+* Revert "resin-vars: Parse the HOSTEXT_IMAGES variable from config.json" [Alex Gonzalez]
 
 # v2.70.0
 ## (2021-02-11)
