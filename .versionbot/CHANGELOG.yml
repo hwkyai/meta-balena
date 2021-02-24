@@ -1,4 +1,128 @@
 - commits:
+    - subject: 'docs: host extensions: Document the syntax for container preloading'
+      hash: a8d58aafcbabada43b2a8a55cc2e3717e9966d72
+      body: >
+        The build system can preload extra containers into the data partition.
+        This
+
+        commit documents the configuration changes required to do so/
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: 'hostapp-extensions-update: Adapt to supervisor managed extensions'
+      hash: 19ed7d5a82a2084aba22833cd6cf189b803f429f
+      body: |
+        The supervisor will call upon the `update-hostapp-extensions` script to
+        perform the update of container extensions, but will still perform the
+        bookkeeping of the containers itself.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: The supervisor now updates from Balena's registry
+      hash: 284e41a62581726ccf05a513a9299fd37dda7341
+      body: |
+        The supervisor will now be pulled as any other extra container from an
+        app using the balenaCloud registry.
+      footer:
+        Change-type: minor
+        change-type: minor
+        Changelog-entry: The supervisor now updates from Balena's registry
+        changelog-entry: The supervisor now updates from Balena's registry
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: 'resin-device-register: Use supervisor version label instead of tag'
+      hash: 2ad33123c3439c08ae5b2760f844d05c621e7a27
+      body: >
+        This is just a name change that reflects the wider change that the
+
+        supervisor is no longer fetched from dockerhub but from Balena's
+        registry.
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: >-
+        docker-disk: Allow to define a custom CA when preloading extra
+        containers
+      hash: 57fb5890f5f2ea3df9c7ad6efc2ffc7d90816d6a
+      body: |
+        When building images against openBalena a custom CA needs to be used so
+        secure API calls are possible.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: Preload extra containers from Balena's registry
+      hash: f69240566de1c6c9223f78d2f9901be9a15156a5
+      body: |
+        Extra containers are those that are installed in the data partition, and
+        include the hostapp, supervisor, extensions and supervised system apps.
+        These extra containers are now all deployed as public apps and installed
+        from the Balena registry.
+
+        When preloaded they all need to be listed in apps.json so the supervisor
+        can manage them.
+      footer:
+        Change-type: minor
+        change-type: minor
+        Changelog-entry: Preload extra containers from Balena's registry
+        changelog-entry: Preload extra containers from Balena's registry
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: >-
+        Revert "docker-disk: Add the host extension images to the data
+        partition"
+      hash: 2169821c7d5f5f974654ca81827a6ec6f7e17625
+      body: >
+        This reverts commit cd44a94cf1646828832070417a2deb9236b0f5ee.
+
+
+        The preloaded hostapp extensions are no longer recorded in the read-only
+        rootfs
+
+        but on the apps.json file.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+    - subject: 'Revert "resin-vars: Parse the HOSTEXT_IMAGES variable from config.json"'
+      hash: 3eb2f7fbab3e921d0cdb8a83e4aa5c7ed8779907
+      body: |
+        This reverts commit 761f517f955f829e12b2c7f0a0f88830ded39e13.
+
+        The hostapp extension information will no longer be added to config.json
+        but to apps.json so that it can be managed by the supervisor.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+      nested: []
+  version: 2.71.0
+  date: 2021-02-24T11:06:21.651Z
+- commits:
     - subject: 'systemd/timeinit: use systemd mount unit for /etc/fake-hwclock'
       hash: 7d6ec3d411af78b9b1f979b90461e9efb059e4e7
       body: |

@@ -1,6 +1,18 @@
 Change log
 -----------
 
+# v2.71.0
+## (2021-02-24)
+
+* docs: host extensions: Document the syntax for container preloading [Alex Gonzalez]
+* hostapp-extensions-update: Adapt to supervisor managed extensions [Alex Gonzalez]
+* The supervisor now updates from Balena's registry [Alex Gonzalez]
+* resin-device-register: Use supervisor version label instead of tag [Alex Gonzalez]
+* docker-disk: Allow to define a custom CA when preloading extra containers [Alex Gonzalez]
+* Preload extra containers from Balena's registry [Alex Gonzalez]
+* Revert "docker-disk: Add the host extension images to the data partition" [Alex Gonzalez]
+* Revert "resin-vars: Parse the HOSTEXT_IMAGES variable from config.json" [Alex Gonzalez]
+
 # v2.70.0
 ## (2021-02-11)
 
