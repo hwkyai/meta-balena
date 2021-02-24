@@ -27,7 +27,6 @@ PV = "${HOSTOS_VERSION}"
 
 RDEPENDS_${PN} = "balena"
 
-VARIANT = "${@bb.utils.contains('DEVELOPMENT_IMAGE','1','development','production',d)}"
 BALENA_API_ENV ?= "balena-cloud.com"
 BALENA_ADMIN ?= "balena_os"
 
@@ -75,7 +74,6 @@ do_compile () {
 		-e FS_BLOCK_SIZE="${FS_BLOCK_SIZE}" \
 		-e HOSTEXT_IMAGES="${HOSTEXT_IMAGES}" \
 		-e HOSTOS_VERSION="${HOSTOS_VERSION}" \
-		-e VARIANT="${VARIANT}" \
 		-e BALENA_ADMIN="${BALENA_ADMIN}" \
 		-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v ${B}:/build \
 		--name ${_container_name} ${_image_name}
