@@ -1,4 +1,26 @@
 - commits:
+    - subject: 'meta-balena: rename resin image types to balena'
+      hash: 83781f2c0e6d36681876e2a9d41b0af2c1268d8f
+      body: |
+        As part of a full rename away from legacy resin namespaces the
+        following components have been renamed:
+
+        - resinos-img -> balenaos-img
+        - image_types_resin -> image_types_balena
+        - image-resin -> image-balena
+        - resin-image -> balena-image
+        - resin-image-flasher -> balena-image-flasher
+        - resin-image-initramfs -> balena-image-initramfs
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+      nested: []
+  version: 2.72.0
+  date: 2021-02-24T17:48:22.529Z
+- commits:
     - subject: 'dnsmasq: enable dbus support'
       hash: 372980ca6aa6bd2793ac856c303c3b3ac4eeffdb
       body: |
