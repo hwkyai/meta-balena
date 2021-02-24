@@ -37,36 +37,30 @@ install_app() {
 	local _appName="$1"
 	local _appType="$2"
 	local _release="$3"
-	local _variant="$4"
 	local _image_location
 	local _api_env
 	local _image_size
 	local _image_size_bytes
 	local _image_id
-	echo "Pulling ${_appName} at ${_release} variant ${_variant}"
+	echo "Pulling ${_appName} at ${_release}"
 	_api_env=${BALENA_API_ENV}
 
-	_image_location=$(fetch_image_from_app "${_appName}" "${_release}" "${_api_env}" "${_variant}")
-	[ -z "${_image_location}" ] && echo "No image found for ${_release} variant ${_variant}" && return 1
+	_image_location=$(fetch_image_from_app "${_appName}" "${_release}" "${_api_env}")
+	[ -z "${_image_location}" ] && echo "No image found for ${_release}" && return 1
 	if docker pull --platform "${HOSTAPP_PLATFORM}" "${_image_location}"; then
 		_image_id=$(balena_imageid_from_digest "${_image_location}")
 		if [ "${_appType}" = "supervisor" ]; then
 			docker tag "${_image_id}" "${SUPERVISOR_APP}:${SUPERVISOR_VERSION_LABEL}"
 		elif [ "${_appType}" = "hostapp extension" ]; then
-			local _tag
-			_tag=${_release}
-			if [ -n "${_variant}" ]; then
-				_tag="${_tag}.${_variant}"
-			fi
-			docker tag "${_image_id}" "${_appName}:${_tag}"
+			docker tag "${_image_id}" "${_appName}:${_release}"
 			docker create --label "${BALENA_HOSTAPP_EXTENSIONS_FEATURE}" "${_image_location}" none
 		fi
 		# Adjust PARTITION_SIZE
-		_image_size_bytes=$(fetch_size_from_app "${_appName}" "${_release}" "${_api_env}" "${_variant}")
+		_image_size_bytes=$(fetch_size_from_app "${_appName}" "${_release}" "${_api_env}")
 		MB_TO_BYTES=$(( 1024*1024 ))
 		_image_size_bytes=$(( PARTITION_SIZE*MB_TO_BYTES + _image_size_bytes ))
 		PARTITION_SIZE=$(( _image_size_bytes/MB_TO_BYTES ))
-		if ! update_apps_json "${_appName}" "${_appType}" "${_release}" "${_variant}"; then
+		if ! update_apps_json "${_appName}" "${_appType}" "${_release}"; then
 			echo "Generation of apps.json failed"
 			exit 1
 		fi
@@ -103,7 +97,7 @@ echo "Docker started."
 
 # Pull in the supervisor image
 if [ -n "${SUPERVISOR_APP}" ] && [ -n "${SUPERVISOR_VERSION_LABEL}" ]; then
-	install_app "${SUPERVISOR_APP}" "supervisor" "${SUPERVISOR_VERSION_LABEL}" "none"
+	install_app "${SUPERVISOR_APP}" "supervisor" "${SUPERVISOR_VERSION_LABEL}"
 fi
 
 # Pull in arch specific hello-world image and tag it balena-healthcheck-image
@@ -114,7 +108,7 @@ docker rmi "${HELLO_REPOSITORY}"
 docker save balena-healthcheck-image > ${BUILD}/balena-healthcheck-image.tar
 # Pull in host extension images, both space-separated or colon-separated lists are accepted
 for image_name in $(echo ${HOSTEXT_IMAGES} | tr ":" " "); do
-	install_app "${image_name}" "hostapp extension" "$(echo "${HOSTOS_VERSION}" | tr "+" "_")" "${VARIANT}"
+	install_app "${image_name}" "hostapp extension" "$(echo "${HOSTOS_VERSION}" | tr "+" "_")"
 done
 
 echo "Stopping docker..."
