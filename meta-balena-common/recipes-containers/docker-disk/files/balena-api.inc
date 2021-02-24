@@ -76,16 +76,16 @@ print_appUUID_from_appName() {
 	echo "${_appUUID}"
 }
 
-# Count all releases at a specific version
+# Fetch the releases at a specific release version
 # Arguments:
 #
 # $1: Public application name
 # $2: Balena target environment
-# $3: Release version label
+# $3: Release version string
 #
 # Result:
-# Prints the releases count metadata in JSON format
-count_releases_json() {
+# Prints the release metadata in JSON format
+fetch_release_json() {
 	local _appName="$1"
 	local _apiEnv="$2"
 	local _version="$3"
@@ -95,34 +95,8 @@ count_releases_json() {
 	# Get application ID from application name
 	_appID=$(print_appID_from_appName "${_appName}" "${_apiEnv}")
 
-	_selector="%20and%20(release_tag/any(rt:(rt/tag_key%20eq%20'version')%20and%20(rt/value%20eq%20%27${_version}%27)))"
-
-	_json=$(${CURL} -XGET -H "Content-Type: application/json" "https://api.${_apiEnv}/${TRANSLATION}/release/\$count?\$filter=(belongs_to__application%20eq%20${_appID})${_selector}")
-	pp_json "${_json}"
-	echo "${_json}"
-}
-
-# Fetch all releases at a specific version in chronologically descending order (most recent first)
-# Arguments:
-#
-# $1: Public application name
-# $2: Balena target environment
-# $3: Release version label
-#
-# Result:
-# Prints the releases metadata in JSON format
-fetch_releases_json() {
-	local _appName="$1"
-	local _apiEnv="$2"
-	local _version="$3"
-	local _json=""
-	local _selector=""
-
-	# Get application ID from application name
-	_appID=$(print_appID_from_appName "${_appName}" "${_apiEnv}")
-
-	_selector="%20and%20(release_tag/any(rt:(rt/tag_key%20eq%20'version')%20and%20(rt/value%20eq%20%27${_version}%27)))"
-	_json=$(${CURL} -XGET -H "Content-Type: application/json" "https://api.${_apiEnv}/${TRANSLATION}/release?\$filter=(belongs_to__application%20eq%20${_appID})${_selector}&\$orderby=created_at%20desc")
+	_selector="%20and%20(release_version%20eq%20%27${_version}%27)))"
+	_json=$(${CURL} -XGET -H "Content-Type: application/json" "https://api.${_apiEnv}/${TRANSLATION}/release?\$filter=(belongs_to__application%20eq%20${_appID})${_selector}")
 	pp_json "${_json}"
 	echo "${_json}"
 }
@@ -169,15 +143,8 @@ get_dbid_from_app_name() {
 
 	dlog "[get_dbid_from_app_name] Fetching images from ${_appName}, release ${_version}"
 
-	# Count the number of releases for specified version tag
-	_count=$(count_releases_json "${_appName}" "${_apiEnv}" "${_version}" | jq --raw-output '.d')
-	[ "${_count}" = "0" ] && >&2 echo "[${_appName}]: No release found for ${_version}" && return 1
-	if [ "${_count}" -gt "1" ]; then
-		>&2 echo "[${_appName}]: Hit a total of ${_count} releases for ${_version} - using most recent"
-	fi
-
-	# Fetch release database identifier from application with specified version tag
-	_dbID=$(fetch_releases_json "${_appName}" "${_apiEnv}" "${_version}" | jq --raw-output '.d[0].id')
+	# Fetch release database identifier from application with specified release version
+	_dbID=$(fetch_release_json "${_appName}" "${_apiEnv}" "${_version}" | jq --raw-output '.d[0].id')
 	echo "${_dbID}"
 }
 
@@ -199,7 +166,7 @@ fetch_commitID_from_app() {
 	dlog "[fetch_commitID_from_app] Fetching images from ${_appName}, release ${_version}"
 
 	# Fetch release commitID from application with specified version tag
-	_commitID=$(fetch_releases_json "${_appName}" "${_apiEnv}" "${_version}" | jq --raw-output '.d[0].commit')
+	_commitID=$(fetch_release_json "${_appName}" "${_apiEnv}" "${_version}" | jq --raw-output '.d[0].commit')
 	echo "${_commitID}"
 }
 
